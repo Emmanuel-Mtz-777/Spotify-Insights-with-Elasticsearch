@@ -1,0 +1,8 @@
+.venv/
+
+__pycache__/
+*.pyc
+*.pyo
+
+spotify_data.csv
+spotify_data.json
