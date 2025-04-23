@@ -1,0 +1,25 @@
+{
+    "spotify-insights": {
+      "mappings": {
+        "properties": {
+          "acousticness": { "type": "float" },
+          "artist_name": { "type": "keyword" },
+          "danceability": { "type": "float" },
+          "duration_ms": { "type": "long" },
+          "energy": { "type": "float" },
+          "genre": { "type": "keyword" },
+          "instrumentalness": { "type": "float" },
+          "liveness": { "type": "float" },
+          "loudness": { "type": "float" },
+          "mode": { "type": "keyword" },
+          "popularity": { "type": "integer" },
+          "speechiness": { "type": "float" },
+          "time_signature": { "type": "keyword" },
+          "track_name": { "type": "keyword" },
+          "valence": { "type": "float" },
+          "year": { "type": "date", "format": "yyyy" }
+        }
+      }
+    }
+  }
+  
