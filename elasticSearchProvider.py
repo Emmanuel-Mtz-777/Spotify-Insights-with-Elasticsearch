@@ -36,6 +36,68 @@ class ElasticSearchProvider:
                     print(f"{len(documents)} documentos insertados en {self.index}")
             except Exception as e:
                 print(f"Error al insertar datos: {str(e)}")
+    
+    def showMostPopularbyGenre(self):
+        try:
+            response=self.connection.search(
+                index=self.index,
+                body={
+                    "size": 0,
+                    "aggs": {
+                        "top_genres": {
+                        "terms": {
+                            "field": "genre",
+                            "size": 10
+                        },
+                        "aggs": {
+                            "top_tracks": {
+                            "top_hits": {
+                                "size": 10,
+                                "_source": ["track_name", "artist_name", "popularity"]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            )
+            return response
+            
+        except Exception as e:
+            print(f"Error: {str(e)}")
+            
+    def showMostPopularbyArtist(self,name):
+        try:
+            response=self.connection.search(
+                index=self.index,
+                body={
+                    "size": 5,
+                    "query": {
+                        "match": {
+                        "artist_name": name 
+                        }
+                    },
+                    "aggs": {
+                        "top_tracks": {
+                        "terms": {
+                            "field": "track_name.keyword",  
+                        },
+                        "aggs": {
+                            "popular_tracks": {
+                            "top_hits": {
+                                "size": 5,
+                                "_source": ["track_name", "popularity"]
+                            }
+                            }
+                        }
+                        }
+                    }
+                }
+            )
+            return response
+            
+        except Exception as e:
+            print(f"Error: {str(e)}")
 
     def __exit__(self, exception_type, exception_value, traceback):
         self.connection.transport.close()
